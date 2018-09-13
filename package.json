@@ -1,59 +1,39 @@
 {
   "name": "react-fetchy",
-  "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.0",
+  "main": "./lib/index.js",
+  "author": {
+    "name": "Loïc Mahieu",
+    "email": "mahieuloic@gmail.com"
+  },
   "license": "MIT",
-  "repository": "loicmahieu/react-fetchy",
-  "homepage": "https://github.com/loicmahieu/react-fetchy",
-  "bugs": "https://github.com/loicmahieu/react-fetchy/issues",
-  "author": "Loic Mahieu <mahieuloic@gmail.com>",
-  "scripts": {},
   "files": [
-    "dist/",
-    "README.md",
-    "LICENSE"
+    "./bin/*",
+    "./lib/*"
   ],
-  "keywords": [
-    "react",
-    "render-props",
-    "fetch"
-  ],
-  "dependencies": {
-    "@types/prop-types": "^15.5.5",
-    "@types/react": "^16.4.14",
-    "react": "^16.5.0"
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "prepublish": "npm run build"
   },
   "peerDependencies": {
-    "react": "^15.5.4 || ^16.0.0"
+    "prop-types": "^15.6.2",
+    "react": "^16.5.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.116",
+    "@types/prop-types": "^15.5.5",
+    "@types/react": "^16.4.14",
+    "@types/superagent": "^3.8.4",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.1",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.0.3"
   },
-  "jest": {
-    "setupFiles": [
-      "raf/polyfill",
-      "<rootDir>/test/setupTest.ts"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
-    ],
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testMatch": [
-      "<rootDir>/test/**/?(*.)(spec|test).ts?(x)"
-    ],
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ]
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "superagent": "^3.8.3"
   }
 }
