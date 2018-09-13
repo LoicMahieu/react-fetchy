@@ -1,6 +1,6 @@
 {
   "name": "react-fetchy",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "./lib/index.js",
   "author": {
     "name": "Loïc Mahieu",
@@ -8,8 +8,7 @@
   },
   "license": "MIT",
   "files": [
-    "./bin/*",
-    "./lib/*"
+    "lib/*"
   ],
   "typings": "./lib/index.d.ts",
   "scripts": {
