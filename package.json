@@ -14,20 +14,29 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint -c tslint.json src/**/*.ts",
-    "prepublish": "npm run build"
+    "lint": "tslint -c tslint.json '{src,test}/**/*.tsx'",
+    "prepublish": "npm run build",
+    "test": "yarn lint && jest"
   },
   "peerDependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.5.1"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.13",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
+    "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.116",
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.14",
     "@types/superagent": "^3.8.4",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "jest": "^23.6.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.0.3"
@@ -35,5 +44,25 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "superagent": "^3.8.3"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/*.tsx"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "testMatch": [
+      "<rootDir>/test/*.spec.tsx"
+    ],
+    "transform": {
+      "^.+\\.(js|tsx?)$": "ts-jest"
+    }
   }
 }

@@ -2,7 +2,7 @@ import { isEqual, pick } from "lodash";
 import * as PropTypes from "prop-types";
 import * as React from "react";
 
-interface IState {
+export interface IState {
   fulfilled: boolean;
   pending: boolean;
   rejected: boolean;
@@ -13,7 +13,7 @@ interface IState {
   value: any;
 }
 
-interface IOptions {
+export interface IOptions {
   body?: any;
   method?: "get" | "post" | "put" | "delete";
   url?: string;
@@ -22,7 +22,7 @@ interface IOptions {
   then?(state: IState): Promise<any>;
 }
 
-interface IBag {
+export interface IBag {
   state: IState;
   fetch(options: IOptions): Promise<IState>;
   reset(): void;
@@ -98,7 +98,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
     return render(bag);
   }
 
-  private async fetch(options: IOptions = {}) {
+  private fetch = async (options: IOptions = {}) => {
     if (this.req) {
       this.req.abort();
     }
@@ -118,6 +118,8 @@ export default class Fetchy extends React.Component<IProps, IState> {
 
     this.setState({ pending: true, fulfilled: false });
 
+    let response: any;
+
     try {
       const request = await import("superagent");
 
@@ -132,17 +134,27 @@ export default class Fetchy extends React.Component<IProps, IState> {
       if (body) {
         req.send(body);
       }
+      req.on("progress", (progress) => {
+        this.setState((oldState) => ({ ...oldState, progress }));
+      });
+      req.on("response", (incomingMessage) => {
+        response = incomingMessage;
+      });
       this.req = req;
 
       // Wait request
-      const result = await req;
+      await req;
+
+      if (!response) {
+        throw new Error("aie ?");
+      }
 
       // Handle Result
-      const value = result.body;
+      const value = response.body;
       const state: IState = {
         ...initialState,
         fulfilled: true,
-        result,
+        result: response,
         value,
       };
       if (then) {
@@ -150,15 +162,21 @@ export default class Fetchy extends React.Component<IProps, IState> {
       }
       this.setState(state);
     } catch (error) {
-      console.error(error);
+      error.data = error.data || {};
+      error.data.result = {
+        response,
+      };
+
       this.setState({
         error,
         fulfilled: false,
         pending: false,
         rejected: true,
-        result: null,
+        result: response,
         value: null,
       });
+
+      throw error;
     }
 
     return Object.freeze({ ...this.state });

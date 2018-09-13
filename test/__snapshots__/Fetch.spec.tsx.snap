@@ -1,0 +1,315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Fetchy basic children 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy basic render 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 200 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 200 2`] = `
+Object {
+  "error": null,
+  "fulfilled": true,
+  "newValue": 1,
+  "pending": false,
+  "progress": null,
+  "rejected": false,
+  "result": Object {
+    "header": Object {
+      "connection": "close",
+      "content-type": "application/json",
+      "date": "Fake",
+      "transfer-encoding": "chunked",
+    },
+    "req": Object {
+      "data": undefined,
+      "headers": Object {
+        "some-header": "1",
+        "user-agent": "node-superagent/3.8.3",
+      },
+      "method": "GET",
+      "url": "http://localhost:8080/200?foo",
+    },
+    "status": 200,
+    "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"some-header\\":\\"1\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200?foo\\"}",
+  },
+  "value": Object {
+    "headers": Object {
+      "accept-encoding": "gzip, deflate",
+      "connection": "close",
+      "host": "localhost:8080",
+      "some-header": "1",
+      "user-agent": "node-superagent/3.8.3",
+    },
+    "url": "/200?foo",
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 200 3`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": true,
+    "newValue": 1,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": Object {
+      "header": Object {
+        "connection": "close",
+        "content-type": "application/json",
+        "date": "Fake",
+        "transfer-encoding": "chunked",
+      },
+      "req": Object {
+        "data": undefined,
+        "headers": Object {
+          "some-header": "1",
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/200?foo",
+      },
+      "status": 200,
+      "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"some-header\\":\\"1\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200?foo\\"}",
+    },
+    "value": Object {
+      "headers": Object {
+        "accept-encoding": "gzip, deflate",
+        "connection": "close",
+        "host": "localhost:8080",
+        "some-header": "1",
+        "user-agent": "node-superagent/3.8.3",
+      },
+      "url": "/200?foo",
+    },
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 404 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 404 2`] = `
+Object {
+  "result": Object {
+    "response": Object {
+      "header": Object {
+        "connection": "close",
+        "date": "Fake",
+        "transfer-encoding": "chunked",
+      },
+      "req": Object {
+        "data": undefined,
+        "headers": Object {
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/404",
+      },
+      "status": 404,
+      "text": "404",
+    },
+  },
+}
+`;
+
+exports[`Fetchy fetch GET 404 3`] = `[Error: Not Found]`;
+
+exports[`Fetchy fetch GET 404 4`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": [Error: Not Found],
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": true,
+    "result": Object {
+      "header": Object {
+        "connection": "close",
+        "date": "Fake",
+        "transfer-encoding": "chunked",
+      },
+      "req": Object {
+        "data": undefined,
+        "headers": Object {
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/404",
+      },
+      "status": 404,
+      "text": "404",
+    },
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch POST 200 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch POST 200 2`] = `
+Object {
+  "error": null,
+  "fulfilled": true,
+  "pending": false,
+  "progress": null,
+  "rejected": false,
+  "result": Object {
+    "header": Object {
+      "connection": "close",
+      "content-length": "0",
+      "date": "Fake",
+    },
+    "req": Object {
+      "data": Object {
+        "data": Array [
+          104,
+          101,
+          108,
+          108,
+          111,
+          32,
+          119,
+          111,
+          114,
+          108,
+          100,
+          10,
+        ],
+        "type": "Buffer",
+      },
+      "headers": Object {
+        "user-agent": "node-superagent/3.8.3",
+      },
+      "method": "GET",
+      "url": "http://localhost:8080/post/200",
+    },
+    "status": 200,
+    "text": "",
+  },
+  "value": Object {},
+}
+`;
+
+exports[`Fetchy fetch POST 200 3`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": true,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": Object {
+      "header": Object {
+        "connection": "close",
+        "content-length": "0",
+        "date": "Fake",
+      },
+      "req": Object {
+        "data": Object {
+          "data": Array [
+            104,
+            101,
+            108,
+            108,
+            111,
+            32,
+            119,
+            111,
+            114,
+            108,
+            100,
+            10,
+          ],
+          "type": "Buffer",
+        },
+        "headers": Object {
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/post/200",
+      },
+      "status": 200,
+      "text": "",
+    },
+    "value": Object {},
+  },
+}
+`;
