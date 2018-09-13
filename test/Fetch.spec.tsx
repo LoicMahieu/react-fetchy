@@ -1,5 +1,7 @@
 
 // tslint:disable-next-line:no-implicit-dependencies
+import delay from "delay";
+// tslint:disable-next-line:no-implicit-dependencies
 import { configure, shallow } from "enzyme";
 // tslint:disable-next-line:no-implicit-dependencies
 import * as Adapter from "enzyme-adapter-react-16";
@@ -133,6 +135,7 @@ describe("Fetchy", () => {
     it("POST 200", async () => {
       expect(await bag.fetch({
         body: readFileSync(pathJoin(__dirname, "./fixtures/hello.txt")),
+        method: "post",
         url: `${base}/post/200`,
       })).toMatchSnapshot();
       expect(bag).toMatchSnapshot();
@@ -141,9 +144,16 @@ describe("Fetchy", () => {
     it("abort", async () => {
       const promise = bag.fetch({ url: `${base}/200?first` });
       expect(bag).toMatchSnapshot();
-      await el.requestModulePromise;
       await bag.fetch({ url: `${base}/200?second` });
       expect(bag).toMatchSnapshot();
+    });
+
+    it("invalid method", async () => {
+      try {
+        await bag.fetch({ url: `${base}`, method: "FOO" });
+      } catch (error) {
+        expect(error.message).toEqual("Invalid method FOO.");
+      }
     });
   });
   describe("reset", () => {
@@ -152,12 +162,44 @@ describe("Fetchy", () => {
       const render = jest.fn((iBag: IBag) => {
         bag = iBag;
       });
-      shallow(<Fetchy render={render} />);
+      const element = <Fetchy render={render} />;
+      shallow(element);
       expect(bag).toMatchSnapshot();
       await bag.fetch({ url: `${base}/200` });
       expect(bag).toMatchSnapshot();
       await bag.reset();
       expect(bag).toMatchSnapshot();
     });
+  });
+  it("fetch on mount / unmount", async () => {
+    let bag;
+    const render = jest.fn((iBag: IBag) => {
+      bag = iBag;
+    });
+    const element = <Fetchy render={render} url={`${base}/200`} />;
+    const wrapper = shallow(element);
+    expect(bag.state.pending).toEqual(true);
+    wrapper.unmount();
+  });
+  it("unmount without any fetch", async () => {
+    let bag;
+    const render = jest.fn((iBag: IBag) => {
+      bag = iBag;
+    });
+    const element = <Fetchy render={render} />;
+    const wrapper = shallow(element);
+    expect(bag.state.pending).toEqual(false);
+    wrapper.unmount();
+  });
+  it("fetch on props change", async () => {
+    let bag;
+    const render = jest.fn((iBag: IBag) => {
+      bag = iBag;
+    });
+    const wrapper = shallow(<Fetchy render={render} />);
+    expect(bag.state.pending).toEqual(false);
+    wrapper.setProps({ url: `${base}/200` });
+    expect(bag.state.pending).toEqual(true);
+    wrapper.unmount();
   });
 });

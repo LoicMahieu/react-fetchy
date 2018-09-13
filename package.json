@@ -23,6 +23,7 @@
     "react": "^16.5.1"
   },
   "devDependencies": {
+    "@types/delay": "^3.1.0",
     "@types/enzyme": "^3.1.13",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.3.2",
@@ -30,6 +31,7 @@
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.14",
     "@types/superagent": "^3.8.4",
+    "delay": "^4.0.1",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "jest": "^23.6.0",

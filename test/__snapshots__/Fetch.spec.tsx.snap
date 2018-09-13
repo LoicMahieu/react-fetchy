@@ -256,7 +256,7 @@ Object {
       "headers": Object {
         "user-agent": "node-superagent/3.8.3",
       },
-      "method": "GET",
+      "method": "POST",
       "url": "http://localhost:8080/post/200",
     },
     "status": 200,
@@ -303,7 +303,7 @@ Object {
         "headers": Object {
           "user-agent": "node-superagent/3.8.3",
         },
-        "method": "GET",
+        "method": "POST",
         "url": "http://localhost:8080/post/200",
       },
       "status": 200,
@@ -383,6 +383,22 @@ Object {
       },
       "url": "/200?second",
     },
+  },
+}
+`;
+
+exports[`Fetchy fetch invalid method 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
   },
 }
 `;

@@ -1,7 +1,7 @@
 import { isEqual, pick } from "lodash";
 import * as PropTypes from "prop-types";
 import * as React from "react";
-import { SuperAgentStatic } from "superagent";
+import * as request from "superagent";
 
 export interface IState {
   fulfilled: boolean;
@@ -63,17 +63,10 @@ export default class Fetchy extends React.Component<IProps, IState> {
 
   private req: any;
 
-  private requestModulePromise?: Promise<SuperAgentStatic>;
-  private requestModule?: SuperAgentStatic;
-
   public async componentDidMount() {
     if (this.props.url) {
       this.fetch();
     }
-
-    const request = import("superagent");
-    this.requestModulePromise = request;
-    this.requestModule = await request;
   }
 
   public componentDidUpdate(prevProps: IProps) {
@@ -111,6 +104,11 @@ export default class Fetchy extends React.Component<IProps, IState> {
       this.req.abort();
     }
 
+    const mergedOptions = {
+      ...this.props,
+      ...options,
+    };
+
     const {
       url,
       method = "get",
@@ -118,7 +116,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       body,
       headers,
       then,
-    } = options;
+    } = mergedOptions;
 
     if (!url) {
       throw new Error("Parameter `url` is required.");
@@ -128,31 +126,31 @@ export default class Fetchy extends React.Component<IProps, IState> {
 
     let response: any;
 
+    // Create request
+    const createReq = request[method];
+    if (!createReq) {
+      throw new Error(`Invalid method ${method}.`);
+    }
+    const req = createReq(url);
+    this.req = req;
+
+    if (headers) {
+      req.set(headers);
+    }
+    if (query) {
+      req.query(query);
+    }
+    if (body) {
+      req.send(body);
+    }
+    req.on("progress", (progress) => {
+      this.setState((oldState) => ({ ...oldState, progress }));
+    });
+    req.on("response", (incomingMessage) => {
+      response = incomingMessage;
+    });
+
     try {
-      const request = this.requestModule || await this.requestModulePromise;
-      if (!request) {
-        throw new Error("Component not mounted");
-      }
-
-      // Create request
-      const req = request[method](url);
-      if (headers) {
-        req.set(headers);
-      }
-      if (query) {
-        req.query(query);
-      }
-      if (body) {
-        req.send(body);
-      }
-      req.on("progress", (progress) => {
-        this.setState((oldState) => ({ ...oldState, progress }));
-      });
-      req.on("response", (incomingMessage) => {
-        response = incomingMessage;
-      });
-      this.req = req;
-
       // Wait request
       await req;
 
