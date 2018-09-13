@@ -37,9 +37,15 @@ describe("Fetchy", () => {
           res.end();
           break;
         case /^\/post\/200/.test(req.url):
+          let body;
           req.on("data", (data) => {
-            console.log("data", data.toString());
+            body += data;
           });
+          res.write(JSON.stringify({
+            body,
+            headers: req.headers,
+            url: req.url,
+          }));
           res.end();
           break;
         default:

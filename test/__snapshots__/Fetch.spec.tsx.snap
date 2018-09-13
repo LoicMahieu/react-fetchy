@@ -232,8 +232,8 @@ Object {
   "result": Object {
     "header": Object {
       "connection": "close",
-      "content-length": "0",
       "date": "Fake",
+      "transfer-encoding": "chunked",
     },
     "req": Object {
       "data": Object {
@@ -260,7 +260,7 @@ Object {
       "url": "http://localhost:8080/post/200",
     },
     "status": 200,
-    "text": "",
+    "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"content-length\\":\\"12\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/post/200\\"}",
   },
   "value": Object {},
 }
@@ -279,8 +279,8 @@ Object {
     "result": Object {
       "header": Object {
         "connection": "close",
-        "content-length": "0",
         "date": "Fake",
+        "transfer-encoding": "chunked",
       },
       "req": Object {
         "data": Object {
@@ -307,7 +307,7 @@ Object {
         "url": "http://localhost:8080/post/200",
       },
       "status": 200,
-      "text": "",
+      "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"content-length\\":\\"12\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/post/200\\"}",
     },
     "value": Object {},
   },
