@@ -68,7 +68,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
     }
   }
 
-  public componentDidUpdate(prevProps: IOptions) {
+  public componentDidUpdate(prevProps: IProps) {
     if (!isEqual(pick(this.props, compareProps), pick(prevProps, compareProps))) {
       this.fetch();
     }
