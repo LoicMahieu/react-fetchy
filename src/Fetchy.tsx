@@ -1,6 +1,7 @@
 import { isEqual, pick } from "lodash";
 import * as PropTypes from "prop-types";
 import * as React from "react";
+import { SuperAgentStatic } from "superagent";
 
 export interface IState {
   fulfilled: boolean;
@@ -62,10 +63,17 @@ export default class Fetchy extends React.Component<IProps, IState> {
 
   private req: any;
 
-  public componentDidMount() {
+  private requestModulePromise?: Promise<SuperAgentStatic>;
+  private requestModule?: SuperAgentStatic;
+
+  public async componentDidMount() {
     if (this.props.url) {
       this.fetch();
     }
+
+    const request = import("superagent");
+    this.requestModulePromise = request;
+    this.requestModule = await request;
   }
 
   public componentDidUpdate(prevProps: IProps) {
@@ -121,7 +129,10 @@ export default class Fetchy extends React.Component<IProps, IState> {
     let response: any;
 
     try {
-      const request = await import("superagent");
+      const request = this.requestModule || await this.requestModulePromise;
+      if (!request) {
+        throw new Error("Component not mounted");
+      }
 
       // Create request
       const req = request[method](url);
@@ -145,8 +156,10 @@ export default class Fetchy extends React.Component<IProps, IState> {
       // Wait request
       await req;
 
+      /* istanbul ignore if */
       if (!response) {
-        throw new Error("aie ?");
+        // Should never happend
+        throw new Error("No response");
       }
 
       // Handle Result

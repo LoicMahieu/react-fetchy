@@ -313,3 +313,167 @@ Object {
   },
 }
 `;
+
+exports[`Fetchy fetch abort 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch abort 2`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": true,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch abort 3`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": true,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": Object {
+      "header": Object {
+        "connection": "close",
+        "content-type": "application/json",
+        "date": "Fake",
+        "transfer-encoding": "chunked",
+      },
+      "req": Object {
+        "data": undefined,
+        "headers": Object {
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/200?second",
+      },
+      "status": 200,
+      "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200?second\\"}",
+    },
+    "value": Object {
+      "headers": Object {
+        "accept-encoding": "gzip, deflate",
+        "connection": "close",
+        "host": "localhost:8080",
+        "user-agent": "node-superagent/3.8.3",
+      },
+      "url": "/200?second",
+    },
+  },
+}
+`;
+
+exports[`Fetchy fetch throw error if no url 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy fetch throw error if no url 2`] = `[Error: Parameter \`url\` is required.]`;
+
+exports[`Fetchy reset works 1`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;
+
+exports[`Fetchy reset works 2`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": true,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": Object {
+      "header": Object {
+        "connection": "close",
+        "content-type": "application/json",
+        "date": "Fake",
+        "transfer-encoding": "chunked",
+      },
+      "req": Object {
+        "data": undefined,
+        "headers": Object {
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "method": "GET",
+        "url": "http://localhost:8080/200",
+      },
+      "status": 200,
+      "text": "{\\"headers\\":{\\"host\\":\\"localhost:8080\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200\\"}",
+    },
+    "value": Object {
+      "headers": Object {
+        "accept-encoding": "gzip, deflate",
+        "connection": "close",
+        "host": "localhost:8080",
+        "user-agent": "node-superagent/3.8.3",
+      },
+      "url": "/200",
+    },
+  },
+}
+`;
+
+exports[`Fetchy reset works 3`] = `
+Object {
+  "fetch": [Function],
+  "reset": [Function],
+  "state": Object {
+    "error": null,
+    "fulfilled": false,
+    "pending": false,
+    "progress": null,
+    "rejected": false,
+    "result": null,
+    "value": null,
+  },
+}
+`;

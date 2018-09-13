@@ -84,13 +84,24 @@ describe("Fetchy", () => {
   });
   describe("fetch", () => {
     let bag;
+    let el;
     beforeEach(() => {
       const render = jest.fn((iBag: IBag) => {
         bag = iBag;
       });
-      shallow(<Fetchy render={render} />);
+      el = <Fetchy render={render} />;
+      shallow(el);
       expect(render).toHaveBeenCalled();
       expect(bag).toMatchSnapshot();
+    });
+
+    it("throw error if no url", async () => {
+      expect.assertions(3);
+      try {
+        await bag.fetch();
+      } catch (error) {
+        expect(error).toMatchSnapshot();
+      }
     });
 
     it("GET 200", async () => {
@@ -124,6 +135,28 @@ describe("Fetchy", () => {
         body: readFileSync(pathJoin(__dirname, "./fixtures/hello.txt")),
         url: `${base}/post/200`,
       })).toMatchSnapshot();
+      expect(bag).toMatchSnapshot();
+    });
+
+    it("abort", async () => {
+      const promise = bag.fetch({ url: `${base}/200?first` });
+      expect(bag).toMatchSnapshot();
+      await el.requestModulePromise;
+      await bag.fetch({ url: `${base}/200?second` });
+      expect(bag).toMatchSnapshot();
+    });
+  });
+  describe("reset", () => {
+    it("works", async () => {
+      let bag;
+      const render = jest.fn((iBag: IBag) => {
+        bag = iBag;
+      });
+      shallow(<Fetchy render={render} />);
+      expect(bag).toMatchSnapshot();
+      await bag.fetch({ url: `${base}/200` });
+      expect(bag).toMatchSnapshot();
+      await bag.reset();
       expect(bag).toMatchSnapshot();
     });
   });
