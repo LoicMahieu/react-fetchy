@@ -112,6 +112,7 @@ describe("Fetchy", () => {
           ...value,
           newValue: 1,
         }),
+        timeout: 20,
         url: `${base}/200`,
       })).toMatchSnapshot();
       expect(bag).toMatchSnapshot();

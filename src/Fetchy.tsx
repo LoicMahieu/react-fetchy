@@ -17,11 +17,12 @@ export interface IState {
 type methodType = "get" | "post" | "put" | "delete";
 
 export interface IOptions {
-  body?: any;
+  body?: string | object;
   method?: methodType;
   url?: string;
-  query?: object;
+  query?: string | object;
   headers?: object;
+  timeout?: number | { deadline?: number, response?: number };
   then?(state: IState): Promise<any>;
 }
 
@@ -118,6 +119,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       body,
       headers,
       then,
+      timeout,
     } = mergedOptions;
 
     if (!url) {
@@ -145,6 +147,9 @@ export default class Fetchy extends React.Component<IProps, IState> {
     }
     if (body) {
       req.send(body);
+    }
+    if (timeout) {
+      req.timeout(timeout);
     }
     req.on("progress", (progress) => {
       this.setState({ progress });

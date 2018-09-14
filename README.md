@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/LoicMahieu/react-fetchy.svg?branch=master)](https://travis-ci.org/LoicMahieu/react-fetchy)
 [![npm](https://img.shields.io/npm/v/react-fetchy.svg)](https://www.npmjs.com/package/react-fetchy)
 
-react-fetchy is a React component that let makes fetch call easily by using "Function as Child components" pattern.
+react-fetchy is a React component that let makes fetch call easily by using "Function as Child components" pattern. Built on top of [`superagent`](http://visionmedia.github.io/superagent/).
 
 ### Example
 
