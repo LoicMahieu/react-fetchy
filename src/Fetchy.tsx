@@ -8,10 +8,10 @@ export interface IState {
   pending: boolean;
   rejected: boolean;
 
-  error: any;
-  progress: any;
-  result: any;
-  value: any;
+  error?: Error;
+  progress?: request.ProgressEvent;
+  result?: request.Response;
+  value?: any;
 }
 
 type methodType = "get" | "post" | "put" | "delete";
@@ -41,10 +41,10 @@ const initialState: IState = {
   pending: false,
   rejected: false,
 
-  error: null,
-  progress: null,
-  result: null,
-  value: null,
+  error: undefined,
+  progress: undefined,
+  result: undefined,
+  value: undefined,
 };
 
 const compareProps = [
@@ -147,7 +147,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       req.send(body);
     }
     req.on("progress", (progress) => {
-      this.setState((oldState) => ({ ...oldState, progress }));
+      this.setState({ progress });
     });
     req.on("response", (incomingMessage) => {
       response = incomingMessage;
