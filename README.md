@@ -47,7 +47,7 @@ const PostList = () => (
 
 ### Options
 
-See [`interface IOptions`](./src/Fetchy.tsx#L19-L26)
+See [`interface IOptions`](./src/Fetchy.tsx#L19-L30)
 
 ## License
 
