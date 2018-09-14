@@ -8,6 +8,8 @@ react-fetchy is a React component that let makes fetch call easily by using "Fun
 
 ### Example
 
+#### Fetch on mount
+
 ```js
 const PostList = () => (
   <Fetchy url="https://jsonplaceholder.typicode.com/todos">
@@ -25,3 +27,28 @@ const PostList = () => (
 ```
 
 See [CodeSandbox](https://codesandbox.io/s/01v3kj6nnw)
+
+#### Manual fetch
+
+```js
+const PostList = () => (
+  <Fetchy>
+    {({ fetch, state: { value: todos } }) => (
+      <button onClick={e => {
+        fetch({
+          url: "https://jsonplaceholder.typicode.com/todos",
+        });
+      }}>Fetch me</button>
+    )}
+  </Fetchy>
+);
+```
+
+
+### Options
+
+See [`interface IOptions`](./src/Fetchy.tsx#L19-L26)
+
+## License
+
+MIT
