@@ -24,6 +24,8 @@ export interface IOptions {
   headers?: object;
   retry?: number;
   timeout?: number | { deadline?: number, response?: number };
+  withCredentials?: boolean;
+
   then?(state: IState): Promise<any>;
 }
 
@@ -122,6 +124,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       then,
       timeout,
       retry,
+      withCredentials,
     } = mergedOptions;
 
     if (!url) {
@@ -155,6 +158,9 @@ export default class Fetchy extends React.Component<IProps, IState> {
     }
     if (retry) {
       req.retry(retry);
+    }
+    if (withCredentials) {
+      req.withCredentials();
     }
     req.on("progress", (progress) => {
       this.setState({ progress });
