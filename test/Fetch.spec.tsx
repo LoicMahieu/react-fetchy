@@ -33,16 +33,18 @@ describe("Fetchy", () => {
           res.end();
           break;
         case /^\/post\/200/.test(req.url):
-          let body;
+          let body = "";
           req.on("data", (data) => {
             body += data;
           });
-          res.write(JSON.stringify({
-            body,
-            headers: req.headers,
-            url: req.url,
-          }));
-          res.end();
+          req.on("end", () => {
+            res.write(JSON.stringify({
+              body,
+              headers: req.headers,
+              url: req.url,
+            }));
+            res.end();
+          });
           break;
         default:
           res.write("ok");
@@ -128,7 +130,7 @@ describe("Fetchy", () => {
 
     it("POST 200", async () => {
       expect(await bag.fetch({
-        body: readFileSync(pathJoin(__dirname, "./fixtures/hello.txt")),
+        body: Buffer.from("hello world"),
         method: "post",
         url: `${base}/post/200`,
       })).toMatchSnapshot();
