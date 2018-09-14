@@ -155,6 +155,13 @@ describe("Fetchy", () => {
         expect(error.message).toEqual("Invalid method FOO.");
       }
     });
+
+    it("accept method with case", async () => {
+      expect(await bag.fetch({
+        method: "GET",
+        url: `${base}/200`,
+      })).toMatchSnapshot();
+    });
   });
   describe("reset", () => {
     it("works", async () => {

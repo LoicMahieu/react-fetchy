@@ -14,9 +14,11 @@ export interface IState {
   value: any;
 }
 
+type methodType = "get" | "post" | "put" | "delete";
+
 export interface IOptions {
   body?: any;
-  method?: "get" | "post" | "put" | "delete";
+  method?: methodType;
   url?: string;
   query?: object;
   headers?: object;
@@ -127,7 +129,8 @@ export default class Fetchy extends React.Component<IProps, IState> {
     let response: any;
 
     // Create request
-    const createReq = request[method];
+    const m = method.toLowerCase() as methodType;
+    const createReq = request[m];
     if (!createReq) {
       throw new Error(`Invalid method ${method}.`);
     }
@@ -151,12 +154,11 @@ export default class Fetchy extends React.Component<IProps, IState> {
     });
 
     try {
-      // Wait request
+      // Wait response
       await req;
 
-      /* istanbul ignore if */
+      /* istanbul ignore if : should never happend */
       if (!response) {
-        // Should never happend
         throw new Error("No response");
       }
 
