@@ -5,13 +5,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -21,13 +21,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -37,24 +37,24 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
 
 exports[`Fetchy fetch GET 200 2`] = `
 Object {
-  "error": null,
+  "error": undefined,
   "fulfilled": true,
   "newValue": 1,
   "pending": false,
-  "progress": null,
+  "progress": undefined,
   "rejected": false,
   "result": Object {
     "header": Object {
@@ -93,11 +93,11 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": true,
     "newValue": 1,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
     "result": Object {
       "header": Object {
@@ -137,13 +137,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -182,7 +182,7 @@ Object {
     "error": [Error: Not Found],
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": true,
     "result": Object {
       "header": Object {
@@ -211,23 +211,23 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
 
 exports[`Fetchy fetch POST 200 2`] = `
 Object {
-  "error": null,
+  "error": undefined,
   "fulfilled": true,
   "pending": false,
-  "progress": null,
+  "progress": undefined,
   "rejected": false,
   "result": Object {
     "header": Object {
@@ -271,10 +271,10 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": true,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
     "result": Object {
       "header": Object {
@@ -319,13 +319,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -335,13 +335,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": true,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -351,10 +351,10 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": true,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
     "result": Object {
       "header": Object {
@@ -392,23 +392,23 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
 
 exports[`Fetchy fetch accept method with case 2`] = `
 Object {
-  "error": null,
+  "error": undefined,
   "fulfilled": true,
   "pending": false,
-  "progress": null,
+  "progress": undefined,
   "rejected": false,
   "result": Object {
     "header": Object {
@@ -445,13 +445,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -461,13 +461,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -479,13 +479,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
@@ -495,10 +495,10 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": true,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
     "result": Object {
       "header": Object {
@@ -536,13 +536,13 @@ Object {
   "fetch": [Function],
   "reset": [Function],
   "state": Object {
-    "error": null,
+    "error": undefined,
     "fulfilled": false,
     "pending": false,
-    "progress": null,
+    "progress": undefined,
     "rejected": false,
-    "result": null,
-    "value": null,
+    "result": undefined,
+    "value": undefined,
   },
 }
 `;
