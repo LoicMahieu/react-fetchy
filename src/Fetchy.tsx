@@ -22,6 +22,7 @@ export interface IOptions {
   url?: string;
   query?: string | object;
   headers?: object;
+  retry?: number;
   timeout?: number | { deadline?: number, response?: number };
   then?(state: IState): Promise<any>;
 }
@@ -120,6 +121,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       headers,
       then,
       timeout,
+      retry,
     } = mergedOptions;
 
     if (!url) {
@@ -150,6 +152,9 @@ export default class Fetchy extends React.Component<IProps, IState> {
     }
     if (timeout) {
       req.timeout(timeout);
+    }
+    if (retry) {
+      req.retry(retry);
     }
     req.on("progress", (progress) => {
       this.setState({ progress });

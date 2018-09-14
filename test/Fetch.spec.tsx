@@ -108,6 +108,7 @@ describe("Fetchy", () => {
           "Some-Header": "1",
         },
         query: "foo",
+        retry: 5,
         then: (value) => ({
           ...value,
           newValue: 1,
