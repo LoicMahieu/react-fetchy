@@ -30,7 +30,6 @@
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.14",
     "@types/superagent": "^3.8.4",
-    "delay": "^4.0.1",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "jest": "^23.6.0",

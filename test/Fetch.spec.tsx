@@ -1,14 +1,8 @@
 
-// tslint:disable-next-line:no-implicit-dependencies
-import delay from "delay";
-// tslint:disable-next-line:no-implicit-dependencies
 import { configure, shallow } from "enzyme";
-// tslint:disable-next-line:no-implicit-dependencies
 import * as Adapter from "enzyme-adapter-react-16";
 import { readFileSync } from "fs";
 import { createServer } from "http";
-// tslint:disable-next-line:no-implicit-dependencies
-import "jest";
 import { join as pathJoin } from "path";
 import * as React from "react";
 
