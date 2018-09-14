@@ -6,6 +6,10 @@
     "name": "Loïc Mahieu",
     "email": "mahieuloic@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loicmahieu/react-fetchy.git"
+  },
   "license": "MIT",
   "files": [
     "lib/*"
