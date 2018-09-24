@@ -1,6 +1,6 @@
 
 import { configure, shallow } from "enzyme";
-import * as Adapter from "enzyme-adapter-react-16";
+import Adapter from "enzyme-adapter-react-16";
 import { readFileSync } from "fs";
 import { createServer } from "http";
 import { join as pathJoin } from "path";
