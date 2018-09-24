@@ -1,7 +1,9 @@
 {
   "name": "react-fetchy",
   "version": "1.0.3",
-  "main": "./lib/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "typings": "lib/esm/index.d.ts",
   "author": {
     "name": "Loïc Mahieu",
     "email": "mahieuloic@gmail.com"
@@ -14,9 +16,10 @@
   "files": [
     "lib/*"
   ],
-  "typings": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "lint": "tslint -c tslint.json '{src,test}/**/*.tsx'",
     "prepublish": "npm run build",
     "test": "yarn lint && jest"

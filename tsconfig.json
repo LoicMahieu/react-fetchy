@@ -14,7 +14,7 @@
 		"jsx": "react",
 
 		"rootDir": "src",
-		"outDir": "lib",
+		"outDir": "./lib/esm",
 
 		"strict": true,
 		"alwaysStrict": true,
