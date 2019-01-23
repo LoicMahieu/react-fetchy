@@ -1,7 +1,8 @@
 // throw error if no options.id
-// children bag doit contenir tous les requests pas seulement ceux fini ou en cours
-// implement abort
-// remove/cancel alors que c'est peutetre en cours
+// check error on timeout
+
+// TODOS:
+// * Pause/resume
 
 import * as React from "react";
 import * as request from "superagent";
@@ -29,6 +30,7 @@ export interface IMultiBag {
   states: {
     [id: string]: IState;
   };
+  abort: (id?: string) => void;
 }
 
 interface IProps extends IMultiOptions {
@@ -37,6 +39,10 @@ interface IProps extends IMultiOptions {
 }
 
 const initialState: IMultiState = {};
+
+class AbortError extends Error {
+  public message = "Request has been aborted";
+}
 
 export default class FetchyMulti extends React.Component<IProps, IMultiState> {
   public static defaultProps: IProps = {
@@ -84,8 +90,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
               [id]: this.requests[id],
             };
           } else {
-            this.requests[id].abort();
-
+            this.abort(id);
             return newRequests;
           }
         }, {});
@@ -96,7 +101,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
   }
 
   public componentWillUnmount() {
-    this.abortAll();
+    this.abort();
   }
 
   public render() {
@@ -110,10 +115,14 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     }
 
     const bag: IMultiBag = {
-      states: this.props.requests.reduce((bagStates, request) => ({
-        ...bagStates,
-        [request.id]: this.state[request.id] || singleInitialState
-      }), {}),
+      abort: this.abort,
+      states: this.props.requests.reduce(
+        (bagStates, request) => ({
+          ...bagStates,
+          [request.id]: this.state[request.id] || singleInitialState,
+        }),
+        {},
+      ),
     };
 
     return render(bag);
@@ -214,6 +223,8 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
         [options.id]: state,
       });
     } catch (error) {
+      console.log("errror ?");
+
       error.data = error.data || {};
       error.data.result = {
         response,
@@ -262,10 +273,29 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     );
   }
 
-  private async abortAll() {
-    // abortAll
-    // if (this.req) {
-    //   this.req.abort();
-    // }
-  }
+  private abort = (id?: string) => {
+    if (id) {
+      if (this.requests[id]) {
+        this.requests[id].abort();
+      }
+      this.setState({
+        [id]: {
+          error: new AbortError(),
+          fulfilled: false,
+          pending: false,
+          rejected: true,
+          result: undefined,
+          value: null,
+        },
+      });
+    } else {
+      const ids = [
+        ...Object.keys(this.requests),
+        ...this.props.requests.map(req => req.id),
+      ];
+      ids.map(id => {
+        this.abort(id);
+      });
+    }
+  };
 }

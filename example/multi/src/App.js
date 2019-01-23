@@ -26,24 +26,25 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.addNew}>Add new</button>
-
-        <table>
-          {this.state.requests.map((request, i) => (
-            <tr key={i}>
-              <td>{request.id}</td>
-              <td>
-                <button onClick={() => this.remove(request)}>Remove</button>
-              </td>
-            </tr>
-          ))}
-        </table>
-
-
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
         <FetchyMulti requests={this.state.requests}>
-          {bag => {
-            return (
+          {bag => (
+            <>
+              <button onClick={() => bag.abort()}>Abort all</button>
+              <button onClick={this.addNew}>Add new</button>
+
+              <table>
+                {this.state.requests.map((request, i) => (
+                  <tr key={i}>
+                    <td>{request.id}</td>
+                    <td>
+                      <button onClick={() => this.remove(request)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </table>
+
+
+              <pre>{JSON.stringify(this.state, null, 2)}</pre>
               <pre>
                 {JSON.stringify(
                   Object.keys(bag.states).map(id => ({
@@ -56,8 +57,8 @@ class App extends React.Component {
                   2,
                 )}
               </pre>
-            );
-          }}
+            </>
+          )}
         </FetchyMulti>
       </div>
     );
