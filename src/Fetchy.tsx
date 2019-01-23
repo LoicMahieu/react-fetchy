@@ -1,6 +1,5 @@
 import isEqual from "lodash/isEqual";
 import pick from "lodash/pick";
-import * as PropTypes from "prop-types";
 import * as React from "react";
 import * as request from "superagent";
 
@@ -15,7 +14,7 @@ export interface IState {
   value?: any;
 }
 
-type methodType = "get" | "post" | "put" | "delete";
+export type methodType = "get" | "post" | "put" | "delete";
 
 export interface IOptions {
   body?: string | object;
@@ -41,7 +40,7 @@ interface IProps extends IOptions {
   render?(bag: IBag): React.ReactNode;
 }
 
-const initialState: IState = {
+export const initialState: IState = {
   fulfilled: false,
   pending: false,
   rejected: false,
@@ -61,10 +60,6 @@ const compareProps = [
 
 export default class Fetchy extends React.Component<IProps, IState> {
   public static defaultProps = {};
-
-  public static propType = {
-    title: PropTypes.string,
-  };
 
   public readonly state: IState = initialState;
 

@@ -1,5 +1,9 @@
 {
-  "extends": ["tslint:latest", "tslint-react"],
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "rules": {
     "no-console": false,
     "no-implicit-dependencies": [true, "dev"],
