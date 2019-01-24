@@ -3,7 +3,7 @@ import pick from "lodash/pick";
 import * as React from "react";
 import * as request from "superagent";
 
-export interface IState {
+export interface IFetchyState {
   fulfilled: boolean;
   pending: boolean;
   rejected: boolean;
@@ -14,11 +14,11 @@ export interface IState {
   value?: any;
 }
 
-export type methodType = "get" | "post" | "put" | "delete";
+export type IMethodType = "get" | "post" | "put" | "delete";
 
-export interface IOptions {
+export interface IFetchyRequestOptions {
   body?: string | object;
-  method?: methodType;
+  method?: IMethodType;
   url?: string;
   query?: string | object;
   headers?: object;
@@ -26,21 +26,21 @@ export interface IOptions {
   timeout?: number | { deadline?: number, response?: number };
   withCredentials?: boolean;
 
-  then?(state: IState): Promise<any>;
+  then?(state: IFetchyState): Promise<any>;
 }
 
-export interface IBag {
-  state: IState;
-  fetch(options: IOptions): Promise<IState>;
+export interface IFetchyRenderArgs {
+  state: IFetchyState;
+  fetch(options: IFetchyRequestOptions): Promise<IFetchyState>;
   reset(): void;
 }
 
-interface IProps extends IOptions {
-  children?(bag: IBag): React.ReactNode;
-  render?(bag: IBag): React.ReactNode;
+interface IFetchyProps extends IFetchyRequestOptions {
+  children?(bag: IFetchyRenderArgs): React.ReactNode;
+  render?(bag: IFetchyRenderArgs): React.ReactNode;
 }
 
-export const initialState: IState = {
+export const initialState: IFetchyState = {
   fulfilled: false,
   pending: false,
   rejected: false,
@@ -58,10 +58,10 @@ const compareProps = [
   "method",
 ];
 
-export default class Fetchy extends React.Component<IProps, IState> {
+export class Fetchy extends React.Component<IFetchyProps, IFetchyState> {
   public static defaultProps = {};
 
-  public readonly state: IState = initialState;
+  public readonly state: IFetchyState = initialState;
 
   private req: any;
 
@@ -71,7 +71,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
     }
   }
 
-  public componentDidUpdate(prevProps: IProps) {
+  public componentDidUpdate(prevProps: IFetchyProps) {
     if (!isEqual(pick(this.props, compareProps), pick(prevProps, compareProps))) {
       this.fetch();
     }
@@ -92,7 +92,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
       throw new Error("Missing children or render props");
     }
 
-    const bag: IBag = {
+    const bag: IFetchyRenderArgs = {
       fetch: this.fetch,
       reset: this.reset,
       state: Object.freeze({ ...this.state }),
@@ -101,7 +101,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
     return render(bag);
   }
 
-  private fetch = async (options: IOptions = {}) => {
+  private fetch = async (options: IFetchyRequestOptions = {}) => {
     if (this.req) {
       this.req.abort();
     }
@@ -132,7 +132,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
     let response: any;
 
     // Create request
-    const m = method.toLowerCase() as methodType;
+    const m = method.toLowerCase() as IMethodType;
     const createReq = request[m];
     if (!createReq) {
       throw new Error(`Invalid method ${method}.`);
@@ -176,7 +176,7 @@ export default class Fetchy extends React.Component<IProps, IState> {
 
       // Handle Result
       const value = response.body;
-      const state: IState = {
+      const state: IFetchyState = {
         ...initialState,
         fulfilled: true,
         result: response,

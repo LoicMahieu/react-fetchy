@@ -8,51 +8,51 @@ import * as React from "react";
 import * as request from "superagent";
 import {
   initialState as singleInitialState,
-  IOptions,
-  IState,
-  methodType,
+  IFetchyRequestOptions,
+  IFetchyState,
+  IMethodType,
 } from "./Fetchy";
 
-export interface IMultiState {
-  [id: string]: IState | undefined;
+export interface IFetchyMultiState {
+  [id: string]: IFetchyState | undefined;
 }
 
-interface ISingleOptions extends IOptions {
+export interface IFetchyMultiRequestOptions extends IFetchyRequestOptions {
   id: string;
 }
 
-export interface IMultiOptions {
+export interface IFetchyMultiOptions {
   concurrency: number;
-  requests: ISingleOptions[];
+  requests: IFetchyMultiRequestOptions[];
 }
 
-export interface IMultiBag {
+export interface IFetchyMultiRenderArgs {
   states: {
-    [id: string]: IState;
+    [id: string]: IFetchyState;
   };
   abort: (id?: string) => void;
 }
 
-interface IProps extends IMultiOptions {
-  children?(bag: IMultiBag): React.ReactNode;
-  render?(bag: IMultiBag): React.ReactNode;
+interface IFetchyMultiProps extends IFetchyMultiOptions {
+  children?(bag: IFetchyMultiRenderArgs): React.ReactNode;
+  render?(bag: IFetchyMultiRenderArgs): React.ReactNode;
 }
 
-const initialState: IMultiState = {};
+const initialState: IFetchyMultiState = {};
 
 class AbortError extends Error {
   public message = "Request has been aborted";
 }
 
-export default class FetchyMulti extends React.Component<IProps, IMultiState> {
-  public static defaultProps: IProps = {
+export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMultiState> {
+  public static defaultProps: IFetchyMultiProps = {
     concurrency: 2,
     requests: [],
   };
 
-  public readonly state: IMultiState = initialState;
+  public readonly state: IFetchyMultiState = initialState;
 
-  private requests: {
+  private superAgentRequests: {
     [id: string]: request.SuperAgentRequest;
   } = {};
 
@@ -60,7 +60,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     this.checkQueue();
   }
 
-  public componentDidUpdate(previousProps: IProps) {
+  public componentDidUpdate(previousProps: IFetchyMultiProps) {
     if (previousProps === this.props) {
       return;
     }
@@ -79,7 +79,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
         }, {}),
       () => {
         // Abort running
-        this.requests = Object.keys(this.requests).reduce((newRequests, id) => {
+        this.superAgentRequests = Object.keys(this.superAgentRequests).reduce((newRequests, id) => {
           const request = this.props.requests.find(
             request => request.id === id,
           );
@@ -87,7 +87,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
           if (request) {
             return {
               ...newRequests,
-              [id]: this.requests[id],
+              [id]: this.superAgentRequests[id],
             };
           } else {
             this.abort(id);
@@ -114,7 +114,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
       throw new Error("Missing children or render props");
     }
 
-    const bag: IMultiBag = {
+    const bag: IFetchyMultiRenderArgs = {
       abort: this.abort,
       states: this.props.requests.reduce(
         (bagStates, request) => ({
@@ -128,10 +128,10 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     return render(bag);
   }
 
-  private fetch = async (options: ISingleOptions) => {
-    if (this.requests[options.id]) {
-      this.requests[options.id].abort();
-      delete this.requests[options.id];
+  private fetch = async (options: IFetchyMultiRequestOptions) => {
+    if (this.superAgentRequests[options.id]) {
+      this.superAgentRequests[options.id].abort();
+      delete this.superAgentRequests[options.id];
     }
 
     const {
@@ -161,13 +161,13 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     let response: any;
 
     // Create request
-    const m = method.toLowerCase() as methodType;
+    const m = method.toLowerCase() as IMethodType;
     const createReq = request[m];
     if (!createReq) {
       throw new Error(`Invalid method ${method}.`);
     }
     const req = createReq(url);
-    this.requests[options.id] = req;
+    this.superAgentRequests[options.id] = req;
 
     if (headers) {
       req.set(headers);
@@ -210,7 +210,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
 
       // Handle Result
       const value = response.body;
-      const state: IState = {
+      const state: IFetchyState = {
         ...singleInitialState,
         fulfilled: true,
         result: response,
@@ -255,7 +255,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
     }).length;
     const availableCount = concurrency - runningRequestCount;
     const requestsTodo = this.props.requests.filter(request => {
-      const runningRequest = this.requests[request.id];
+      const runningRequest = this.superAgentRequests[request.id];
       if (runningRequest) {
         return false;
       }
@@ -275,8 +275,8 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
 
   private abort = (id?: string) => {
     if (id) {
-      if (this.requests[id]) {
-        this.requests[id].abort();
+      if (this.superAgentRequests[id]) {
+        this.superAgentRequests[id].abort();
       }
       this.setState({
         [id]: {
@@ -290,7 +290,7 @@ export default class FetchyMulti extends React.Component<IProps, IMultiState> {
       });
     } else {
       const ids = [
-        ...Object.keys(this.requests),
+        ...Object.keys(this.superAgentRequests),
         ...this.props.requests.map(req => req.id),
       ];
       ids.map(id => {

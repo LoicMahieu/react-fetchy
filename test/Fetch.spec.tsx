@@ -4,7 +4,7 @@ import Adapter from "enzyme-adapter-react-16";
 import { createServer } from "http";
 import * as React from "react";
 
-import Fetchy, { IBag } from "../src";
+import { Fetchy, IFetchyRenderArgs } from "../src";
 
 const base = "http://localhost:8080";
 
@@ -64,14 +64,14 @@ describe("Fetchy", () => {
   });
   describe("basic", () => {
     it("render", () => {
-      const render = jest.fn((bag: IBag) => {
+      const render = jest.fn((bag: IFetchyRenderArgs) => {
         expect(bag).toMatchSnapshot();
       });
       shallow(<Fetchy render={render} />);
       expect(render).toHaveBeenCalled();
     });
     it("children", () => {
-      const children = jest.fn((bag: IBag) => {
+      const children = jest.fn((bag: IFetchyRenderArgs) => {
         expect(bag).toMatchSnapshot();
       });
       shallow(<Fetchy children={children} />);
@@ -82,7 +82,7 @@ describe("Fetchy", () => {
     let bag;
     let el;
     beforeEach(() => {
-      const render = jest.fn((iBag: IBag) => {
+      const render = jest.fn((iBag: IFetchyRenderArgs) => {
         bag = iBag;
       });
       el = <Fetchy render={render} />;
@@ -163,7 +163,7 @@ describe("Fetchy", () => {
   describe("reset", () => {
     it("works", async () => {
       let bag;
-      const render = jest.fn((iBag: IBag) => {
+      const render = jest.fn((iBag: IFetchyRenderArgs) => {
         bag = iBag;
       });
       const element = <Fetchy render={render} />;
@@ -177,7 +177,7 @@ describe("Fetchy", () => {
   });
   it("fetch on mount / unmount", async () => {
     let bag;
-    const render = jest.fn((iBag: IBag) => {
+    const render = jest.fn((iBag: IFetchyRenderArgs) => {
       bag = iBag;
     });
     const element = <Fetchy render={render} url={`${base}/200`} />;
@@ -187,7 +187,7 @@ describe("Fetchy", () => {
   });
   it("unmount without any fetch", async () => {
     let bag;
-    const render = jest.fn((iBag: IBag) => {
+    const render = jest.fn((iBag: IFetchyRenderArgs) => {
       bag = iBag;
     });
     const element = <Fetchy render={render} />;
@@ -197,7 +197,7 @@ describe("Fetchy", () => {
   });
   it("fetch on props change", async () => {
     let bag;
-    const render = jest.fn((iBag: IBag) => {
+    const render = jest.fn((iBag: IFetchyRenderArgs) => {
       bag = iBag;
     });
     const wrapper = shallow(<Fetchy render={render} />);
