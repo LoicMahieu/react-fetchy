@@ -8,9 +8,13 @@ react-fetchy is a React component that let makes fetch call easily by using "Fun
 
 ### Example
 
-#### Fetch on mount
+#### Single
+
+##### Fetch on mount
 
 ```js
+import { Fetchy } from "react-fetchy";
+
 const PostList = () => (
   <Fetchy url="https://jsonplaceholder.typicode.com/todos">
     {({ fetch, state: { value: todos } }) => (
@@ -26,9 +30,9 @@ const PostList = () => (
 );
 ```
 
-See [CodeSandbox](https://codesandbox.io/s/01v3kj6nnw)
+See [CodeSandbox](https://codesandbox.io/s/pjrrk8nqrx)
 
-#### Manual fetch
+##### Manual fetch
 
 ```js
 const PostList = () => (
@@ -44,10 +48,35 @@ const PostList = () => (
 );
 ```
 
+##### Options
 
-### Options
+See [`interface IFetchyRequestOptions`](./src/Fetchy.tsx#L19-L30)
 
-See [`interface IOptions`](./src/Fetchy.tsx#L19-L30)
+#### Multi
+
+##### Fetch on mount
+
+```js
+import { FetchyMulti } from "react-fetchy";
+
+const PostList = () => (
+  <FetchyMulti
+    requests={[
+      { id: "1", url: "https://jsonplaceholder.typicode.com/todos/1" },
+      { id: "2", url: "https://jsonplaceholder.typicode.com/todos/2" },
+      { id: "3", url: "https://jsonplaceholder.typicode.com/todos/3" }
+    ]}
+  >
+    {({ states }) => <pre>{JSON.stringify(states, null, 2)}</pre>}
+  </FetchyMulti>
+);
+```
+
+See [CodeSandbox](https://codesandbox.io/s/n500mq8k1j)
+
+##### Options
+
+See [`interface IFetchyMultiOptions`](./src/FetchyMulti.tsx#L25-L28)
 
 ## License
 
