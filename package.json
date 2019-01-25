@@ -21,7 +21,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "lint": "tslint -c tslint.json '{src,test}/**/*.tsx'",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "yarn lint && jest"
   },
   "peerDependencies": {
