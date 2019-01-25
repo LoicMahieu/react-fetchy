@@ -7,10 +7,10 @@
 import * as React from "react";
 import * as request from "superagent";
 import {
-  initialState as singleInitialState,
   IFetchyRequestOptions,
   IFetchyState,
   IMethodType,
+  initialState as singleInitialState,
 } from "./Fetchy";
 
 export interface IFetchyMultiState {
