@@ -6,6 +6,7 @@
 
 import * as React from "react";
 import * as request from "superagent";
+import { AbortError } from "./AbortError";
 import {
   IFetchyRequestOptions,
   IFetchyState,
@@ -40,11 +41,10 @@ interface IFetchyMultiProps extends IFetchyMultiOptions {
 
 const initialState: IFetchyMultiState = {};
 
-class AbortError extends Error {
-  public message = "Request has been aborted";
-}
-
-export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMultiState> {
+export class FetchyMulti extends React.Component<
+  IFetchyMultiProps,
+  IFetchyMultiState
+> {
   public static defaultProps: IFetchyMultiProps = {
     concurrency: 2,
     requests: [],
@@ -69,31 +69,30 @@ export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMulti
     this.setState(
       state =>
         Object.keys(state).reduce((newState, id) => {
-          const request = this.props.requests.find(
-            request => request.id === id,
-          );
+          const req = this.props.requests.find(r => r.id === id);
           return {
             ...newState,
-            [id]: request ? state[id] : undefined,
+            [id]: req ? state[id] : undefined,
           };
         }, {}),
       () => {
         // Abort running
-        this.superAgentRequests = Object.keys(this.superAgentRequests).reduce((newRequests, id) => {
-          const request = this.props.requests.find(
-            request => request.id === id,
-          );
+        this.superAgentRequests = Object.keys(this.superAgentRequests).reduce(
+          (newRequests, id) => {
+            const req = this.props.requests.find(r => r.id === id);
 
-          if (request) {
-            return {
-              ...newRequests,
-              [id]: this.superAgentRequests[id],
-            };
-          } else {
-            this.abort(id);
-            return newRequests;
-          }
-        }, {});
+            if (req) {
+              return {
+                ...newRequests,
+                [id]: this.superAgentRequests[id],
+              };
+            } else {
+              this.abort(id);
+              return newRequests;
+            }
+          },
+          {},
+        );
 
         this.checkQueue();
       },
@@ -117,9 +116,9 @@ export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMulti
     const bag: IFetchyMultiRenderArgs = {
       abort: this.abort,
       states: this.props.requests.reduce(
-        (bagStates, request) => ({
+        (bagStates, req) => ({
           ...bagStates,
-          [request.id]: this.state[request.id] || singleInitialState,
+          [req.id]: this.state[req.id] || singleInitialState,
         }),
         {},
       ),
@@ -254,8 +253,8 @@ export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMulti
       return state ? state.pending : false;
     }).length;
     const availableCount = concurrency - runningRequestCount;
-    const requestsTodo = this.props.requests.filter(request => {
-      const runningRequest = this.superAgentRequests[request.id];
+    const requestsTodo = this.props.requests.filter(req => {
+      const runningRequest = this.superAgentRequests[req.id];
       if (runningRequest) {
         return false;
       }
@@ -263,9 +262,9 @@ export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMulti
     });
 
     await Promise.all(
-      requestsTodo.slice(0, availableCount).map(async request => {
+      requestsTodo.slice(0, availableCount).map(async req => {
         try {
-          await this.fetch(request);
+          await this.fetch(req);
         } finally {
           this.checkQueue();
         }
@@ -293,8 +292,8 @@ export class FetchyMulti extends React.Component<IFetchyMultiProps, IFetchyMulti
         ...Object.keys(this.superAgentRequests),
         ...this.props.requests.map(req => req.id),
       ];
-      ids.map(id => {
-        this.abort(id);
+      ids.map(i => {
+        this.abort(i);
       });
     }
   };
