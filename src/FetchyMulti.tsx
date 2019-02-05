@@ -32,6 +32,7 @@ export interface IFetchyMultiRenderArgs {
     [id: string]: IFetchyState;
   };
   abort: (id?: string) => void;
+  retry: (id: string) => void;
 }
 
 interface IFetchyMultiProps extends IFetchyMultiOptions {
@@ -115,6 +116,7 @@ export class FetchyMulti extends React.Component<
 
     const bag: IFetchyMultiRenderArgs = {
       abort: this.abort,
+      retry: this.retry,
       states: this.props.requests.reduce(
         (bagStates, req) => ({
           ...bagStates,
@@ -222,8 +224,6 @@ export class FetchyMulti extends React.Component<
         [options.id]: state,
       });
     } catch (error) {
-      console.log("errror ?");
-
       error.data = error.data || {};
       error.data.result = {
         response,
@@ -239,8 +239,6 @@ export class FetchyMulti extends React.Component<
           value: null,
         },
       });
-
-      throw error;
     }
 
     return Object.freeze({ ...this.state });
@@ -296,5 +294,20 @@ export class FetchyMulti extends React.Component<
         this.abort(i);
       });
     }
+  };
+
+  private retry = (id: string) => {
+    const req = this.props.requests.find(r => r.id === id) || { id: "" };
+
+    this.setState({
+      [id]: {
+        ...initialState,
+        fulfilled: false,
+        pending: false,
+        rejected: false,
+      },
+    });
+
+    this.fetch(req);
   };
 }
