@@ -300,12 +300,7 @@ export class FetchyMulti extends React.Component<
     const req = this.props.requests.find(r => r.id === id) || { id: "" };
 
     this.setState({
-      [id]: {
-        ...initialState,
-        fulfilled: false,
-        pending: false,
-        rejected: false,
-      },
+      [id]: undefined,
     });
 
     this.fetch(req);
