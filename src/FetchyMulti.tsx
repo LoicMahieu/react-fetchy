@@ -297,7 +297,10 @@ export class FetchyMulti extends React.Component<
   };
 
   private retry = (id: string) => {
-    const req = this.props.requests.find(r => r.id === id) || { id: "" };
+    const req = this.props.requests.find(r => r.id === id);
+    if (!req) {
+      throw new Error('Could not find request for id: ' + id)
+    }
 
     this.setState({
       [id]: undefined,
