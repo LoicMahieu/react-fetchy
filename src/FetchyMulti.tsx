@@ -59,7 +59,7 @@ export class FetchyMulti extends React.Component<
 
   private mounted: boolean = true;
 
-  public async componentDidMount() {
+  public componentDidMount() {
     this.checkQueue();
   }
 
@@ -258,9 +258,15 @@ export class FetchyMulti extends React.Component<
     const availableCount = concurrency - runningRequestCount;
     const requestsTodo = this.props.requests.filter(req => {
       const runningRequest = this.superAgentRequests[req.id];
+
+      if (this.state[req.id]) {
+        return false;
+      }
+
       if (runningRequest) {
         return false;
       }
+
       return true;
     });
 
