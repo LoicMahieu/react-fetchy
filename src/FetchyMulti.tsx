@@ -59,7 +59,7 @@ export class FetchyMulti extends React.Component<
 
   private mounted: boolean = true;
 
-  public async componentDidMount() {
+  public componentDidMount() {
     this.checkQueue();
   }
 
@@ -266,6 +266,7 @@ export class FetchyMulti extends React.Component<
       if (runningRequest) {
         return false;
       }
+
       return true;
     });
 

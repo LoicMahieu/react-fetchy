@@ -131,7 +131,6 @@ describe("FetchyMulti", () => {
     );
 
     res.bag.retry("1");
-    res.wrapper.update();
     expect(res.bag.states["1"].pending).toEqual(true);
   });
   it("abort on update", async () => {
@@ -166,5 +165,34 @@ describe("FetchyMulti", () => {
     expect(res.bag.states["1"]).toBeUndefined();
     expect(res.bag.states["2"].pending).toEqual(true);
     expect(res.bag.states["3"].pending).toEqual(true);
+  });
+  it("abort not started requests", async () => {
+    const res = setup(FetchyMulti, {
+      requests: [
+        {
+          id: "1",
+          url: `${base}/200`,
+        },
+        {
+          id: "2",
+          url: `${base}/200`,
+        },
+        {
+          id: "3",
+          url: `${base}/200?delay=100`,
+        },
+      ],
+    });
+    expect(res.bag.states["1"].pending).toEqual(true);
+    expect(res.bag.states["2"].pending).toEqual(true);
+
+    res.bag.abort("3");
+
+    await waitUntil(() => !res.bag.states["1"].pending);
+    await waitUntil(() => !res.bag.states["2"].pending);
+
+    expect(res.bag.states["3"].pending).toEqual(false);
+    expect(res.bag.states["3"].rejected).toEqual(true);
+    expect(res.bag.states["3"].error).not.toBeUndefined()
   });
 });
