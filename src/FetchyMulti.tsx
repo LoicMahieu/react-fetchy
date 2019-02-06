@@ -57,6 +57,8 @@ export class FetchyMulti extends React.Component<
     [id: string]: request.SuperAgentRequest;
   } = {};
 
+  private mounted: boolean = true;
+
   public async componentDidMount() {
     this.checkQueue();
   }
@@ -101,6 +103,7 @@ export class FetchyMulti extends React.Component<
   }
 
   public componentWillUnmount() {
+    this.mounted = false;
     this.abort();
   }
 
@@ -204,6 +207,10 @@ export class FetchyMulti extends React.Component<
       // Wait response
       await req;
 
+      if (!this.mounted) {
+        return;
+      }
+
       /* istanbul ignore if : should never happend */
       if (!response) {
         throw new Error("No response");
@@ -240,8 +247,6 @@ export class FetchyMulti extends React.Component<
         },
       });
     }
-
-    return Object.freeze({ ...this.state });
   };
 
   private async checkQueue() {
@@ -299,13 +304,18 @@ export class FetchyMulti extends React.Component<
   private retry = (id: string) => {
     const req = this.props.requests.find(r => r.id === id);
     if (!req) {
-      throw new Error('Could not find request for id: ' + id)
+      throw new Error("Could not find request for id: " + id);
+    }
+
+    if (this.superAgentRequests[id]) {
+      this.superAgentRequests[id].abort();
+      delete this.superAgentRequests[id];
     }
 
     this.setState({
       [id]: undefined,
     });
 
-    this.fetch(req);
+    this.checkQueue();
   };
 }
