@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FetchyMulti basic children 1`] = `
+Object {
+  "abort": [Function],
+  "retry": [Function],
+  "states": Object {},
+}
+`;
+
+exports[`FetchyMulti basic render 1`] = `
+Object {
+  "abort": [Function],
+  "retry": [Function],
+  "states": Object {},
+}
+`;
+
+exports[`FetchyMulti fetch on mount 1`] = `
+Object {
+  "abort": [Function],
+  "retry": [Function],
+  "states": Object {
+    "1": Object {
+      "error": undefined,
+      "fulfilled": true,
+      "pending": false,
+      "progress": undefined,
+      "rejected": false,
+      "result": Object {
+        "header": Object {
+          "connection": "close",
+          "content-type": "application/json",
+          "date": "Fake",
+          "transfer-encoding": "chunked",
+        },
+        "req": Object {
+          "data": undefined,
+          "headers": Object {
+            "some-header": "1",
+            "user-agent": "node-superagent/3.8.3",
+          },
+          "method": "GET",
+          "url": "http://localhost:8081/200?foo",
+        },
+        "status": 200,
+        "text": "{\\"headers\\":{\\"host\\":\\"localhost:8081\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"some-header\\":\\"1\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200?foo\\"}",
+      },
+      "value": Object {
+        "headers": Object {
+          "accept-encoding": "gzip, deflate",
+          "connection": "close",
+          "host": "localhost:8081",
+          "some-header": "1",
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "url": "/200?foo",
+      },
+    },
+    "2": Object {
+      "error": undefined,
+      "fulfilled": true,
+      "pending": false,
+      "progress": undefined,
+      "rejected": false,
+      "result": Object {
+        "header": Object {
+          "connection": "close",
+          "content-type": "application/json",
+          "date": "Fake",
+          "transfer-encoding": "chunked",
+        },
+        "req": Object {
+          "data": undefined,
+          "headers": Object {
+            "user-agent": "node-superagent/3.8.3",
+          },
+          "method": "GET",
+          "url": "http://localhost:8081/200?delay=50",
+        },
+        "status": 200,
+        "text": "{\\"headers\\":{\\"host\\":\\"localhost:8081\\",\\"accept-encoding\\":\\"gzip, deflate\\",\\"user-agent\\":\\"node-superagent/3.8.3\\",\\"connection\\":\\"close\\"},\\"url\\":\\"/200?delay=50\\"}",
+      },
+      "value": Object {
+        "headers": Object {
+          "accept-encoding": "gzip, deflate",
+          "connection": "close",
+          "host": "localhost:8081",
+          "user-agent": "node-superagent/3.8.3",
+        },
+        "url": "/200?delay=50",
+      },
+    },
+  },
+}
+`;
+
+exports[`FetchyMulti handle errors 1`] = `
+Object {
+  "abort": [Function],
+  "retry": [Function],
+  "states": Object {
+    "1": Object {
+      "error": [Error: Internal Server Error],
+      "fulfilled": false,
+      "pending": false,
+      "rejected": true,
+      "result": Object {
+        "header": Object {
+          "connection": "close",
+          "date": "Fake",
+          "transfer-encoding": "chunked",
+        },
+        "req": Object {
+          "data": undefined,
+          "headers": Object {
+            "user-agent": "node-superagent/3.8.3",
+          },
+          "method": "GET",
+          "url": "http://localhost:8081/500",
+        },
+        "status": 500,
+        "text": "500",
+      },
+      "value": null,
+    },
+  },
+}
+`;
+
+exports[`FetchyMulti handle errors and retry 1`] = `
+Object {
+  "abort": [Function],
+  "retry": [Function],
+  "states": Object {
+    "1": Object {
+      "error": [Error: Internal Server Error],
+      "fulfilled": false,
+      "pending": false,
+      "rejected": true,
+      "result": Object {
+        "header": Object {
+          "connection": "close",
+          "date": "Fake",
+          "transfer-encoding": "chunked",
+        },
+        "req": Object {
+          "data": undefined,
+          "headers": Object {
+            "user-agent": "node-superagent/3.8.3",
+          },
+          "method": "GET",
+          "url": "http://localhost:8081/500",
+        },
+        "status": 500,
+        "text": "500",
+      },
+      "value": null,
+    },
+  },
+}
+`;
